@@ -1,0 +1,59 @@
+name: flutter_developer
+description: A new Flutter application.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cached_network_image: ^2.4.0
+  cupertino_icons: ^1.0.1
+  http: ^0.12.2
+  flutter_localizations:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: Gilroy
+      fonts:
+        - asset: assets/fonts/Gilroy/Gilroy.ttf
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato/Lato-Black.TTF
+        - asset: assets/fonts/Lato/Lato-BlackItalic.TTF
+        - asset: assets/fonts/Lato/Lato-Bold.TTF
+        - asset: assets/fonts/Lato/Lato-BoldItalic.TTF
+        - asset: assets/fonts/Lato/Lato-Italic.TTF
+        - asset: assets/fonts/Lato/Lato-Light.TTF
+        - asset: assets/fonts/Lato/Lato-LightItalic.TTF
+        - asset: assets/fonts/Lato/Lato-Regular.TTF
+        - asset: assets/fonts/Lato/Lato-Thin.TTF
+        - asset: assets/fonts/Lato/Lato-ThinItalic.TTF
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway/Raleway-Black.TTF
+        - asset: assets/fonts/Raleway/Raleway-BlackItalic.TTF
+        - asset: assets/fonts/Raleway/Raleway-Bold.TTF
+        - asset: assets/fonts/Raleway/Raleway-BoldItalic.TTF
+        - asset: assets/fonts/Raleway/Raleway-ExtraBold.TTF
+        - asset: assets/fonts/Raleway/Raleway-ExtraBoldItalic.TTF
+        - asset: assets/fonts/Raleway/Raleway-ExtraLight.TTF
+        - asset: assets/fonts/Raleway/Raleway-ExtraLightItalic.TTF
+        - asset: assets/fonts/Raleway/Raleway-Italic.TTF
+        - asset: assets/fonts/Raleway/Raleway-Light.TTF
+        - asset: assets/fonts/Raleway/Raleway-LightItalic.TTF
+        - asset: assets/fonts/Raleway/Raleway-Medium.TTF
+        - asset: assets/fonts/Raleway/Raleway-MediumItalic.TTF
+        - asset: assets/fonts/Raleway/Raleway-Regular.TTF
+        - asset: assets/fonts/Raleway/Raleway-SemiBold.TTF
+        - asset: assets/fonts/Raleway/Raleway-SemiBoldItalic.TTF
+        - asset: assets/fonts/Raleway/Raleway-Thin.TTF
+        - asset: assets/fonts/Raleway/Raleway-ThinItalic.TTF
