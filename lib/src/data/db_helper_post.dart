@@ -40,7 +40,7 @@ class DBHelperBase {
 
   _onCreate(Database db, int version) async {
     await db.execute("CREATE TABLE $TABLEBASE (id INTEGER PRIMARY KEY, "
-        "$idPost TEXT, $codigo TEXT, $respostas INTEGER, $dataHora TEXT, "
+        "$idPost TEXT, $codigo TEXT, $respostas INTEGER, $dataHora INTEGER, "
         "$estaLido TEXT, $autorID TEXT, $autorNome TEXT, $autorImageUrl BLOB,"
         "$texto BLOB, $versao INTEGER)");
   }
@@ -49,6 +49,7 @@ class DBHelperBase {
     var dbClient = await db;
 
     int res = await dbClient.insert(TABLEBASE, postHelper.toJson());
+    print('res $res');
 
     getPostDB();
 
@@ -59,7 +60,10 @@ class DBHelperBase {
     var dbClient = await db;
     List<dynamic> dataDB = [];
 
-    List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLEBASE");
+    List<Map> maps = await dbClient.query(
+        TABLEBASE,
+        orderBy: '$dataHora DESC'
+    );
 
     if (maps != null) {
       for (int i = 0; i < maps.length; i++) {
@@ -72,14 +76,16 @@ class DBHelperBase {
     return dataDB;
   }
 
-  Future<int> updatePostDB(Post postHelper) async {
+  Future<int> updatePostDB({idUpdate, dataHoraUpdate, textoUpdate}) async {
     var dbClient = await db;
 
-    int postUpdate = await dbClient.update(
-        TABLEBASE,
-        postHelper.toJson(),
-        where: '$idPost = ?',
-        whereArgs: [postHelper.idPost]
+    int postUpdate = await dbClient.rawUpdate(
+      'UPDATE $TABLEBASE SET $dataHora = ?, $texto = ? '
+          'WHERE id = $idUpdate',
+      [
+        dataHoraUpdate,
+        textoUpdate,
+      ],
     );
 
     getPostDB();
@@ -87,18 +93,22 @@ class DBHelperBase {
     return postUpdate;
   }
 
-  Future deleteBaseDB(id) async {
+  Future deleteBaseDB({id}) async {
     var dbClient = await db;
 
-    int res = await dbClient.delete(
-      TABLEBASE,
-      where: '$idPost = ?',
-      whereArgs: [id],
-    );
+    if(id != null) {
+      int res = await dbClient.delete(
+        TABLEBASE,
+        where: 'id = ?',
+        whereArgs: [id],
+      );
 
-    getPostDB();
+      getPostDB();
 
-    return res;
+      return res;
+    } else {
+      return await dbClient.delete('$TABLEBASE');
+    }
   }
 
   Future closeBaseDB() async {

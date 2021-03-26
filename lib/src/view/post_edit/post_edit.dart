@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_developer/src/components/custom_text_field.dart';
-import 'package:flutter_developer/src/controller/global_functions.dart';
 import 'package:flutter_developer/src/controller/edit_post_controller.dart';
+import 'package:flutter_developer/src/controller/global_functions.dart';
 import 'package:flutter_developer/src/utils/globals.dart';
 
 class PostEdit extends StatefulWidget {
-  String id;
-  String autorID;
-  String autorNome;
+  int id;
   String textPost;
 
-  PostEdit({this.id, this.autorID, this.autorNome, this.textPost, Key key})
+  PostEdit({this.id, this.textPost, Key key})
       : super(key: key);
 
   @override
@@ -45,7 +43,7 @@ class _PostEditState extends State<PostEdit> {
         key: formKeyPost,
         child: Stack(
           children: [
-            Positioned(
+           Positioned(
               child: Align(
                 alignment: FractionalOffset.bottomRight,
                 child: Row(
@@ -99,7 +97,13 @@ class _PostEditState extends State<PostEdit> {
           color: color,
           child: InkWell(
             onTap: () {
-              Navigator.of(context).pop();
+              editPostControllerFocus.unfocus();
+
+              if (title == 'Editar') {
+                updateDataPost(context, widget.id);
+              } else {
+                deletePost(context, widget.id);
+              }
             },
             child: Container(
               width: mediaQuery(context, 0.42),

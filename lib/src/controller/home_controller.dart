@@ -16,6 +16,8 @@ Future<dynamic> getJson() async {
     try {
       _dataGet = json.decode(response);
 
+      await dbBase.deleteBaseDB();
+
       for (int i = 0; i < _dataGet['Result'].length; i++) {
         //Salvar dados no sqlite
         await dbBase.savePostDB(
@@ -23,7 +25,7 @@ Future<dynamic> getJson() async {
             idPost: _dataGet['Result'][i]['ID'],
             codigo: _dataGet['Result'][i]['Codigo'],
             respostas: _dataGet['Result'][i]['Respostas'],
-            dataHora: _dataGet['Result'][i]['DataHora'],
+            dataHora: int.tryParse(_dataGet['Result'][i]['DataHora']),
             estaLido: _dataGet['Result'][i]['EstaLido'].toString(),
             autorID: _dataGet['Result'][i]['AutorID'],
             autorNome: _dataGet['Result'][i]['AutorNome'],

@@ -32,7 +32,7 @@ onMSG(scaffoldKey, msg, {behavior = SnackBarBehavior.fixed}) {
 
 String validatePost(value) {
   if (value.isEmpty) {
-    return null;
+    return 'Campo obrigatório!';
   } else if(value.length < 5){
     return 'Seu post deve ter mais de 5 caracteres.';
   }
