@@ -14,7 +14,6 @@ class _AddPostState extends State<AddPost> {
   void initState() {
     super.initState();
     addPostController.text = '';
-    dateSelected = DateTime.now();
   }
 
   @override
@@ -57,6 +56,7 @@ class _AddPostState extends State<AddPost> {
               focusNode: addPostControllerFocus,
               validate: validatePost,
               maxLines: 10,
+              autovalidate: true,
               colorBord: colorDark.withOpacity(0.4),
             ),
           ],
@@ -75,9 +75,7 @@ class _AddPostState extends State<AddPost> {
         child: Material(
           color: color,
           child: InkWell(
-            onTap: () {
-              saveDataPost();
-            },
+            onTap: saveDataPost,
             child: Container(
               width: mediaQuery(context, 1),
               height: 45,
