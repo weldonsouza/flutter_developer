@@ -2,7 +2,7 @@ class Post {
   String idPost;
   String codigo;
   int respostas;
-  String dataHora;
+  int dataHora;
   String estaLido;
   String autorID;
   String autorNome;
