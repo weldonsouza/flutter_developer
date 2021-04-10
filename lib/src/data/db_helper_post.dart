@@ -49,7 +49,6 @@ class DBHelperBase {
     var dbClient = await db;
 
     int res = await dbClient.insert(TABLEBASE, postHelper.toJson());
-    print('res $res');
 
     getPostDB();
 

@@ -7,13 +7,19 @@ import 'package:flutter_developer/src/data/db_helper_post.dart';
 import 'package:intl/intl.dart';
 
 //******************  CONSTANTES GLOBAIS  **********************
-const String baseUrl = 'https://api.mocki.io/v1/7f811b6a/posts';
+const String baseUrl = 'https://run.mocky.io/v3/29ca1a88-ec02-44aa-9d26-214983b174a9';
 
 enum typeRequest {
   GET,
   POST,
   PUT,
   DELETE,
+}
+
+enum connectivityStatus {
+  WIFI,
+  PHONE,
+  OFFLINE
 }
 
 //******************  VARIÁVEIS GLOBAIS  ********************

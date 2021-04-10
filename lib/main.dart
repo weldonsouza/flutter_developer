@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_developer/src/view/home/home_page.dart';
+import 'package:flutter_developer/src/services/connectivity_service.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+
+import 'src/view/home/home_page.dart';
+import 'src/utils/globals.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiProvider(
+    providers: [
+      StreamProvider<connectivityStatus>(
+        create: (context) =>
+        ConnectivityService().connectionStatusController.stream,
+        catchError: (BuildContext context, e) {
+          return null;
+        },
+        updateShouldNotify: (_, __) => true,
+      ),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

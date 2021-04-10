@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_developer/src/controller/global_functions.dart';
 import 'package:flutter_developer/src/controller/home_controller.dart';
+import 'package:flutter_developer/src/controller/network_test_connectivity.dart';
 import 'package:flutter_developer/src/utils/globals.dart';
 import 'package:flutter_developer/src/view/add_post/add_post.dart';
 import 'package:flutter_developer/src/view/post_edit/post_edit.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -25,85 +27,92 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: <Widget>[
-            Container(
-              width: 3,
-              height: mediaQuery(context, 0.075),
-              color: Colors.white,
-              margin: EdgeInsets.only(
-                right: mediaQuery(context, 0.025),
-              ),
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: Row(
+              children: <Widget>[
+                Container(
+                  width: 3,
+                  height: mediaQuery(context, 0.075),
+                  color: Colors.white,
+                  margin: EdgeInsets.only(
+                    right: mediaQuery(context, 0.025),
+                  ),
+                ),
+                Text(
+                  'Blogging',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.bold,
+                    fontSize: mediaQuery(context, 0.075),
+                  ),
+                ),
+              ],
             ),
-            Text(
-              'Blogging',
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Raleway',
-                fontWeight: FontWeight.bold,
-                fontSize: mediaQuery(context, 0.075),
-              ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(builder: (context) => AddPost()),
+              );
+            },
+            child: Icon(
+              Icons.edit_outlined,
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            CupertinoPageRoute(builder: (context) => AddPost()),
-          );
-        },
-        child: Icon(
-          Icons.edit_outlined,
-        ),
-      ),
-      body: SafeArea(
-        top: true,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              StreamBuilder(
-                stream: streamJsonController.stream,
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
-                      return Container();
-                    case ConnectionState.active:
-                      Widget widget;
+          ),
+          body: SafeArea(
+            top: true,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  StreamBuilder(
+                    stream: streamJsonController.stream,
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.none:
+                          return Container();
+                        case ConnectionState.active:
+                          Widget widget;
 
-                      if (snapshot.data != null) {
-                        widget = Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 70),
-                          child: Column(
-                            children: _listJson(snapshot.data),
-                          ),
-                        );
-                      } else {
-                        widget = Container();
-                      }
+                          if (snapshot.data != null) {
+                            widget = Padding(
+                              padding: EdgeInsets.only(top: 10, bottom: 70),
+                              child: Column(
+                                children: _listJson(snapshot.data),
+                              ),
+                            );
+                          } else {
+                            widget = Container();
+                          }
 
-                      return widget;
-                    default:
-                      return Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              colorDark,
+                          return widget;
+                        default:
+                          return Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(10),
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  colorDark,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                  }
-                },
+                          );
+                      }
+                    },
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
-      ),
+
+        //Barra de informando se tem internet
+        NetworkTestConnectivity(),
+      ],
     );
   }
 
